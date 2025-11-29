@@ -1,6 +1,27 @@
-[gd_scene format=3 uid="uid://b0y4nekco7kd1"]
+[gd_scene load_steps=5 format=3 uid="uid://b0y4nekco7kd1"]
+
+[ext_resource type="Script" uid="uid://dh6egeeor2n1s" path="res://scripts/hangman.gd" id="1_a6wn6"]
+[ext_resource type="LabelSettings" uid="uid://crarj3dqnicyy" path="res://resources/label_settings/text_input.tres" id="1_tbbyo"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ihj4x"]
+font_size = 64
+
+[sub_resource type="GDScript" id="GDScript_tbbyo"]
+script/source = "extends TextEdit
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [node name="Hangman" type="Node2D"]
+script = ExtResource("1_a6wn6")
 
 [node name="Background" type="Node2D" parent="."]
 
@@ -8,3 +29,62 @@
 offset_right = 720.0
 offset_bottom = 1280.0
 color = Color(0.85648125, 0.86167496, 0.8143181, 1)
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+offset_right = 720.0
+offset_bottom = 1280.0
+
+[node name="TitleMargin" type="MarginContainer" parent="UI/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 120
+
+[node name="Title" type="Label" parent="UI/VBoxContainer/TitleMargin"]
+layout_mode = 2
+text = "HangMan"
+label_settings = SubResource("LabelSettings_ihj4x")
+horizontal_alignment = 1
+
+[node name="InsertLabel" type="Label" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "Insert a word"
+label_settings = ExtResource("1_tbbyo")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextInput" type="TextEdit" parent="UI/VBoxContainer/HBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(250, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+placeholder_text = "..."
+emoji_menu_enabled = false
+tab_input_mode = false
+script = SubResource("GDScript_tbbyo")
+
+[node name="SendButton" type="Button" parent="UI/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Send"
+
+[node name="HSeparator" type="HSeparator" parent="UI/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="UI/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Or use a random word"
+autowrap_mode = 3
+
+[connection signal="button_down" from="UI/VBoxContainer/HBoxContainer/SendButton" to="." method="_on_send_button_button_down"]
