@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1764438236|146007351';
+const CACHE_VERSION = '1764520156|133563823';
 /** @type {string} */
 const CACHE_PREFIX = 'Web Minigames-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
