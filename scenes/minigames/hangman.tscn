@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0y4nekco7kd1"]
+[gd_scene load_steps=6 format=3 uid="uid://b0y4nekco7kd1"]
 
 [ext_resource type="Script" uid="uid://dh6egeeor2n1s" path="res://scripts/hangman.gd" id="1_a6wn6"]
 [ext_resource type="LabelSettings" uid="uid://crarj3dqnicyy" path="res://resources/label_settings/text_input.tres" id="1_tbbyo"]
@@ -16,9 +16,13 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 "
+
+[sub_resource type="LabelSettings" id="LabelSettings_a6wn6"]
+font_size = 32
+font_color = Color(1, 0.3182741, 0.3060076, 1)
 
 [node name="Hangman" type="Node2D"]
 script = ExtResource("1_a6wn6")
@@ -75,6 +79,15 @@ script = SubResource("GDScript_tbbyo")
 [node name="SendButton" type="Button" parent="UI/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Send"
+
+[node name="InvalidInputLabel" type="Label" parent="UI/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Invalid word!
+You must enter a single word
+You can only enter letters a-z"
+label_settings = SubResource("LabelSettings_a6wn6")
+horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="UI/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
