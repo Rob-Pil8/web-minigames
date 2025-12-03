@@ -93,7 +93,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="Button" type="Button" parent="UI/VBoxContainer"]
+[node name="RandomWordButton" type="Button" parent="UI/VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -101,3 +101,4 @@ text = "Or use a random word"
 autowrap_mode = 3
 
 [connection signal="button_down" from="UI/VBoxContainer/HBoxContainer/SendButton" to="." method="_on_send_button_button_down"]
+[connection signal="button_down" from="UI/VBoxContainer/RandomWordButton" to="." method="_on_random_word_button_button_down"]
