@@ -4,7 +4,8 @@ extends Node2D
 func _ready() -> void:
 	$UI.show()
 	$GameUI.hide()
-
+	$GameUI/VBoxContainer/InputErrorLabel.hide()
+	
 func _on_send_button_button_down() -> void:
 	var word
 	
@@ -63,11 +64,29 @@ func start_game(word: String):
 	var word_display_node = $GameUI/VBoxContainer/WordDisplay
 	
 	# display the first letter of the word, every other letter is shown as a "_" until it's guessed
-	# also it makes the word all lowecase except for the first letter
+	# also it capitalizes every letter of the word
 	word[0] = word[0].to_upper()
 	var word_displayed = word
 	for i in range(1, len(word)):
 		word_displayed[i] = "_"
-		word[i] = word[i].to_lower()
+		word[i] = word[i].to_upper()
 		
 	word_display_node.text = word_displayed
+
+
+func _on_send_letter_button_pressed() -> void:
+	var input_field = $GameUI/VBoxContainer/LetterInput/InsertLetterField
+	var input_error_label = $GameUI/VBoxContainer/InputErrorLabel
+	var used_letters = $GameLogic/UsedLetters
+	var inserted_character: String = input_field.text
+	
+	input_error_label.hide()
+	input_field.text = ""
+	if (inserted_character > 'z' or inserted_character < 'a') and (inserted_character > 'Z' or inserted_character < 'A'):
+		input_error_label.show()
+	
+	#check if the letter has already been used
+	used_letters.letter_already_used(inserted_character)
+	
+	#TODO implement error counter
+	#TODO implement word_display update

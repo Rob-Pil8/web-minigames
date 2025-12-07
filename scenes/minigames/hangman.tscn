@@ -1,15 +1,16 @@
-[gd_scene load_steps=11 format=3 uid="uid://b0y4nekco7kd1"]
+[gd_scene load_steps=14 format=3 uid="uid://b0y4nekco7kd1"]
 
 [ext_resource type="Script" uid="uid://dh6egeeor2n1s" path="res://scripts/hangman.gd" id="1_a6wn6"]
 [ext_resource type="LabelSettings" uid="uid://crarj3dqnicyy" path="res://resources/label_settings/text_input.tres" id="1_tbbyo"]
 [ext_resource type="FontFile" uid="uid://bq4eokmpkb5xx" path="res://assets/fonts/unitblock-font/Unitblock-JpJma.ttf" id="3_gq27u"]
 [ext_resource type="LabelSettings" uid="uid://invrqvhvsn82" path="res://resources/label_settings/show_word.tres" id="4_1ume1"]
+[ext_resource type="Script" uid="uid://be7kfirfejaud" path="res://scenes/minigames/used_letters.gd" id="5_ji86a"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ihj4x"]
 font_size = 64
 
 [sub_resource type="GDScript" id="GDScript_tbbyo"]
-script/source = "extends TextEdit
+script/source = "extends LineEdit
 
 
 # Called when the node enters the scene tree for the first time.
@@ -30,6 +31,16 @@ font_color = Color(1, 0.3182741, 0.3060076, 1)
 font = ExtResource("3_gq27u")
 font_size = 96
 font_color = Color(0.9231209, 0.58853894, 0.61556935, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_e4ush"]
+font = ExtResource("3_gq27u")
+font_size = 28
+font_color = Color(0.8705078, 0.67045367, 0.72677547, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qd8uh"]
+font = ExtResource("3_gq27u")
+font_size = 38
+font_color = Color(1, 0.34680778, 0.3690956, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ji86a"]
 font = ExtResource("3_gq27u")
@@ -84,14 +95,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="TextInput" type="TextEdit" parent="UI/VBoxContainer/HBoxContainer"]
-clip_contents = false
+[node name="TextInput" type="LineEdit" parent="UI/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(250, 40)
 layout_mode = 2
 size_flags_horizontal = 4
 placeholder_text = "..."
 emoji_menu_enabled = false
-tab_input_mode = false
 script = SubResource("GDScript_tbbyo")
 
 [node name="SendButton" type="Button" parent="UI/VBoxContainer/HBoxContainer"]
@@ -149,6 +158,42 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 
+[node name="LetterInput" type="HBoxContainer" parent="GameUI/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="InsertLetterLabel" type="Label" parent="GameUI/VBoxContainer/LetterInput"]
+layout_mode = 2
+text = "Insert a letter: "
+label_settings = SubResource("LabelSettings_e4ush")
+
+[node name="InsertLetterField" type="LineEdit" parent="GameUI/VBoxContainer/LetterInput"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+max_length = 1
+keep_editing_on_text_submit = true
+context_menu_enabled = false
+emoji_menu_enabled = false
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
+
+[node name="SendLetterButton" type="Button" parent="GameUI/VBoxContainer/LetterInput"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "↵"
+
+[node name="InputErrorLabel" type="Label" parent="GameUI/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "You can only use characters a-z and A-Z"
+label_settings = SubResource("LabelSettings_qd8uh")
+horizontal_alignment = 1
+
+[node name="Spacer3" type="Control" parent="GameUI/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
 [node name="UsedLettersTitle" type="Label" parent="GameUI/VBoxContainer"]
 layout_mode = 2
 text = "Used letters:"
@@ -163,5 +208,11 @@ label_settings = SubResource("LabelSettings_r4uit")
 horizontal_alignment = 1
 autowrap_mode = 3
 
+[node name="GameLogic" type="Node" parent="."]
+
+[node name="UsedLetters" type="Node" parent="GameLogic"]
+script = ExtResource("5_ji86a")
+
 [connection signal="button_down" from="UI/VBoxContainer/HBoxContainer/SendButton" to="." method="_on_send_button_button_down"]
 [connection signal="button_down" from="UI/VBoxContainer/RandomWordButton" to="." method="_on_random_word_button_button_down"]
+[connection signal="pressed" from="GameUI/VBoxContainer/LetterInput/SendLetterButton" to="." method="_on_send_letter_button_pressed"]
