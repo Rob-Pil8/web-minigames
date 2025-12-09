@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://b0y4nekco7kd1"]
+[gd_scene load_steps=15 format=3 uid="uid://b0y4nekco7kd1"]
 
 [ext_resource type="Script" uid="uid://dh6egeeor2n1s" path="res://scripts/hangman.gd" id="1_a6wn6"]
 [ext_resource type="LabelSettings" uid="uid://crarj3dqnicyy" path="res://resources/label_settings/text_input.tres" id="1_tbbyo"]
 [ext_resource type="FontFile" uid="uid://bq4eokmpkb5xx" path="res://assets/fonts/unitblock-font/Unitblock-JpJma.ttf" id="3_gq27u"]
 [ext_resource type="LabelSettings" uid="uid://invrqvhvsn82" path="res://resources/label_settings/show_word.tres" id="4_1ume1"]
 [ext_resource type="Script" uid="uid://be7kfirfejaud" path="res://scenes/minigames/used_letters.gd" id="5_ji86a"]
+[ext_resource type="Script" uid="uid://d0so4v8xk0dwi" path="res://scenes/minigames/word_holder.gd" id="6_r4uit"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ihj4x"]
 font_size = 64
@@ -212,6 +213,9 @@ autowrap_mode = 3
 
 [node name="UsedLetters" type="Node" parent="GameLogic"]
 script = ExtResource("5_ji86a")
+
+[node name="WordHolder" type="Node" parent="GameLogic"]
+script = ExtResource("6_r4uit")
 
 [connection signal="button_down" from="UI/VBoxContainer/HBoxContainer/SendButton" to="." method="_on_send_button_button_down"]
 [connection signal="button_down" from="UI/VBoxContainer/RandomWordButton" to="." method="_on_random_word_button_button_down"]

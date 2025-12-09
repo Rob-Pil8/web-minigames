@@ -1,5 +1,11 @@
 extends Node2D
 
+@onready var errors: int = 0
+@onready var max_errors: int = 0
+@onready var word_holder = $GameLogic/WordHolder
+
+signal lost
+signal won
 
 func _ready() -> void:
 	$UI.show()
@@ -72,13 +78,16 @@ func start_game(word: String):
 		word[i] = word[i].to_upper()
 		
 	word_display_node.text = word_displayed
+	word_holder.word = word
 
 
 func _on_send_letter_button_pressed() -> void:
 	var input_field = $GameUI/VBoxContainer/LetterInput/InsertLetterField
 	var input_error_label = $GameUI/VBoxContainer/InputErrorLabel
 	var used_letters = $GameLogic/UsedLetters
+	var word_display_node = $GameUI/VBoxContainer/WordDisplay
 	var inserted_character: String = input_field.text
+	var already_used: bool
 	
 	input_error_label.hide()
 	input_field.text = ""
@@ -86,7 +95,20 @@ func _on_send_letter_button_pressed() -> void:
 		input_error_label.show()
 	
 	#check if the letter has already been used
-	used_letters.letter_already_used(inserted_character)
+	already_used = used_letters.letter_already_used(inserted_character)
+	
+	if already_used:
+		errors += 1
+		#TODO Tell the letter has already been used
+	else:
+		for i in range(len(word_holder.word)):
+			if word_holder.word[i].to_upper() == inserted_character.to_upper():
+				word_display_node.text[i] = inserted_character.to_upper()
+				
+	
+	if errors > max_errors:
+		lost.emit()
+		
 	
 	#TODO implement error counter
 	#TODO implement word_display update
