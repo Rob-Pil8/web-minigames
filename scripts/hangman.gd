@@ -4,12 +4,20 @@ extends Node2D
 
 @onready var errors: int = 0
 @onready var word_holder = $GameLogic/WordHolder
+@onready var used_letter_error = $GameUI/VBoxContainer/AlreadyUsedLetterError
+@onready var lost_ui = $LostUI
+@onready var won_ui = $WonUI
+@onready var ui = $UI
+@onready var game_ui = $GameUI
 
 
 func _ready() -> void:
 	$UI.show()
 	$GameUI.hide()
 	$GameUI/VBoxContainer/InputErrorLabel.hide()
+	used_letter_error.hide()
+	lost_ui.hide()
+	won_ui.hide()
 	
 func _on_send_button_button_down() -> void:
 	var word
@@ -97,10 +105,12 @@ func _on_send_letter_button_pressed() -> void:
 	already_used = used_letters.letter_already_used(inserted_character)
 	
 	if already_used:
-		pass
-		#TODO Tell the letter has already been used
+		used_letter_error.show()
+		
 	else:
 		var is_wrong: bool = true
+		
+		used_letter_error.hide()
 		for i in range(len(word_holder.word)):
 			if word_holder.word[i].to_upper() == inserted_character.to_upper():
 				word_display_node.text[i] = inserted_character.to_upper()
@@ -112,8 +122,7 @@ func _on_send_letter_button_pressed() -> void:
 	# if you are over the maximum amount of errors you loose
 	if errors > max_errors:
 		loose()
-		
-		#BUG it seems like even pressing the send button with the fied empty counts as an error
+	
 	
 	# if the displayed word is equal to the word you win
 	if are_strings_equal(word_display_node.text, word_holder.word):
@@ -125,11 +134,15 @@ func _on_send_letter_button_pressed() -> void:
 	
 	
 func loose():
-	print("Lost")
+	lost_ui.show()
+	game_ui.hide()
+	#print("Lost")
 	
 
 func win():
-	print("Won")
+	won_ui.show()
+	game_ui.hide()
+	#print("Won")
 	
 	
 func are_strings_equal(str1: String, str2: String):

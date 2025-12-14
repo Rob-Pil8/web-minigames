@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cq34aodls86ij"]
+
+[ext_resource type="FontFile" uid="uid://bq4eokmpkb5xx" path="res://assets/fonts/unitblock-font/Unitblock-JpJma.ttf" id="1_ashks"]
+
+[resource]
+font = ExtResource("1_ashks")
+font_size = 52
+font_color = Color(0.9151033, 0.4415002, 0.46450102, 1)

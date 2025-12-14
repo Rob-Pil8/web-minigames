@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://b0y4nekco7kd1"]
+[gd_scene load_steps=16 format=3 uid="uid://b0y4nekco7kd1"]
 
 [ext_resource type="Script" uid="uid://dh6egeeor2n1s" path="res://scripts/hangman.gd" id="1_a6wn6"]
 [ext_resource type="LabelSettings" uid="uid://crarj3dqnicyy" path="res://resources/label_settings/text_input.tres" id="1_tbbyo"]
 [ext_resource type="FontFile" uid="uid://bq4eokmpkb5xx" path="res://assets/fonts/unitblock-font/Unitblock-JpJma.ttf" id="3_gq27u"]
 [ext_resource type="LabelSettings" uid="uid://invrqvhvsn82" path="res://resources/label_settings/show_word.tres" id="4_1ume1"]
+[ext_resource type="LabelSettings" uid="uid://cq34aodls86ij" path="res://resources/label_settings/error_label.tres" id="5_e4ush"]
 [ext_resource type="Script" uid="uid://be7kfirfejaud" path="res://scenes/minigames/used_letters.gd" id="5_ji86a"]
 [ext_resource type="Script" uid="uid://d0so4v8xk0dwi" path="res://scenes/minigames/word_holder.gd" id="6_r4uit"]
 
@@ -130,6 +131,7 @@ text = "Or use a random word"
 autowrap_mode = 3
 
 [node name="GameUI" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 720.0
@@ -196,6 +198,13 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 
+[node name="AlreadyUsedLetterError" type="Label" parent="GameUI/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Letter already used!"
+label_settings = ExtResource("5_e4ush")
+horizontal_alignment = 1
+
 [node name="UsedLettersTitle" type="Label" parent="GameUI/VBoxContainer"]
 layout_mode = 2
 text = "Used letters:"
@@ -209,6 +218,19 @@ text = "a, b, c"
 label_settings = SubResource("LabelSettings_r4uit")
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="LostUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 720.0
+offset_bottom = 1280.0
+
+[node name="WonUI" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="GameLogic" type="Node" parent="."]
 
